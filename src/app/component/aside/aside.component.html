@@ -1,0 +1,82 @@
+<!--sidebar start-->
+<aside>
+    <div id="sidebar" class="nav-collapse ">
+        <!-- sidebar menu start-->
+        <ul class="sidebar-menu">
+            <li class="active">
+                <a class="" href="#">
+                    <i class="icon_house_alt"></i>
+                    <span>Tableau de bord</span>
+                </a>
+            </li>
+            <li class="" >
+                <a [routerLink]="['/principal', {outlets: {child1: ['exercice']}}]">
+                    <i class="social_myspace"></i>
+                    <span>Exercice</span>
+                </a>
+            </li>
+            <li class="sub-menu" [ngClass]="{'active':stkSub}" (click)="stkSub=!stkSub" >
+                    <a class="" style="cursor: pointer;">
+                        <i class="icon_document_alt"></i>
+                        <span>Personne Morale</span>
+                        <span class="menu-arrow " [ngClass]="{'arrow_carrot-down':stkSub, 'arrow_carrot-right': !stkSub}"></span>
+                    </a>
+                    <ul [ngStyle]="{'display':stkSub ? 'block':'none'}" style="list-style-type: none;">
+                        <li><a class="" [routerLink]="['/principal', {outlets: {child1: ['employees']}}]">Employee</a></li>
+                        <li><a class="" [routerLink]="['/principal', {outlets: {child1: ['impotsSociete']}}]">Impots Societe</a></li>
+                        <li><a class="" [routerLink]="['/principal', {outlets: {child1: ['loyers']}}]">loyers</a></li>
+
+                    </ul>
+                </li>
+            <li class="" >
+                <a [routerLink]="['/principal', {outlets: {child1: ['personnePhyz']}}]" class="">
+                    <i class="icon_documents_alt"></i>
+                    <span>Personne Physique
+                    </span>
+                </a>
+            </li>
+            <li >
+                <a class="" [routerLink]="['/principal', {outlets: {child1: ['rapports']}}]">
+                    <i class="icon_piechart"></i>
+                    <span>Rapports</span>
+                </a>
+            </li>
+            <li class="sub-menu" [ngClass]="{'active':congSub}" (click)="congSub=!congSub">
+                <a class="" style="cursor: pointer;">
+                    <i class="icon_calendar" ></i>
+                    <span>Inscriptions</span>
+                    <span class="menu-arrow" [ngClass]="{'arrow_carrot-down':congSub, 'arrow_carrot-right': !congSub}"></span>
+                </a>
+                <ul [ngStyle]="{'display':congSub ? 'block':'none'}" style="list-style-type: none;">
+                        <li ><a class="" [routerLink]="['/principal', {outlets: {child1: ['personnePhyz']}}]">Personne Physique</a></li>
+                        <li ><a class="" [routerLink]="['/principal', {outlets: {child1: ['personneMorl']}}]">Personne Morale</a></li>
+                    </ul>
+            </li>
+            <li >
+                    <a class="" [routerLink]="['/principal', {outlets: {child1: ['caisse']}}]">
+                        <i class="icon_currency"></i>
+                        <span>Caisse</span>
+                    </a>
+                </li>
+            <li class="sub-menu" [ngClass]="{'active':lgSub}" (click)="lgSub=!lgSub">
+                <a class="" style="cursor: pointer;">
+                    <i class="icon_desktop"></i>
+                    <span>Langue (Fr)</span>
+                    <span class="menu-arrow " [ngClass]="{'arrow_carrot-down':lgSub, 'arrow_carrot-right': !lgSub}"></span>
+                </a>
+                <ul [ngStyle]="{'display':lgSub ? 'block':'none'}" style="list-style-type: none;">
+                    <li><a class="" href="#">Français</a></li>
+                    <li><a class="" href="#">Anglais</a></li>
+                </ul>
+            </li>
+            <li >
+                    <a class="" [routerLink]="['/principal', {outlets: {child1: ['conf']}}]">
+                        <i class="icon_cog"></i>
+                        <span>Configurations</span>
+                    </a>
+                </li>
+        </ul>
+        <!-- sidebar menu end-->
+    </div>
+</aside>
+<!--sidebar end-->

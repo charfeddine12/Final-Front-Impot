@@ -1,0 +1,44 @@
+<div class="login-img3-body" id="body">
+
+    <div class="container">
+      <form class="login-form" [formGroup]="loginForm" (submit)="login()">        
+        <div class="login-wrap" style="padding-bottom: 65px;">
+            <p class="login-img"><i class="icon_lock_alt"></i></p>
+            <p style="color: red;" *ngIf="connectionError">Vérifiez vos données!!</p>
+            <div class="input-group">
+              <span class="input-group-addon"><i class="icon_profile"></i></span>
+              <input type="text" class="form-control" [(ngModel)]="credentials.username" [ngModelOptions]="{standalone: true}" placeholder="Login" autofocus 
+             >
+            </div>
+            <div class="input-group" style="margin-top:15px;">
+                <span class="input-group-addon"><i class="icon_key_alt"></i></span>
+                <input type="password" class="form-control" [(ngModel)]="credentials.password" [ngModelOptions]="{standalone: true}" placeholder="Mot de passe" 
+                >
+            </div>
+            <button class="btn btn-info btn-lg btn-block" type="submit" style="margin-top:15px;" >Login</button>
+            <span class="pull-right" style="margin-top:5px;"> <a > Mot de passe oublier?</a></span>
+            <label>
+                <input type="checkbox" checked="checked" name="remember"> Remember me
+              </label>
+            <span class="pull-left sub-menu" style="margin-top:5px;" [ngClass]="{'active':stkSub}" (click)="stkSub=!stkSub"> 
+                    <a class="" style="cursor: pointer;">
+                        <span>Inscription</span>
+                        <span class="menu-arrow " [ngClass]="{'arrow_carrot-down':stkSub, 'arrow_carrot-right': !stkSub}"></span>
+                    </a>
+                    <ul [ngStyle]="{'display':stkSub ? 'block':'none'}" style="list-style-type: none;">
+                        <li><a class="" [routerLink]="['/inscrit','phy']">Personne Physique</a></li>
+                        <li><a class="" [routerLink]="['/inscrit','mor']">Personne Morale</a></li>
+                    </ul>
+                </span>
+              
+
+        </div>
+      </form>
+  
+      <div class="secondpart text-right">
+          <div class="credits">
+              
+          </div>
+      </div>
+  </div>
+  </div>

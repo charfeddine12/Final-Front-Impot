@@ -1,0 +1,466 @@
+<app-header></app-header>
+<header class="panel-heading">
+  <h3>Inscription </h3>
+</header>
+<div style="margin-top: 30px; margin-right: 2">
+  <alert type="danger" dismissible="true" *ngIf="signFailed">
+    <strong>Erreur!</strong> L'inscription est ne pas effectué .
+  </alert>
+  <alert type="success" dismissible="true" *ngIf="signSuccess">
+    <strong>Succées !</strong> L'inscription est effectué avec succés.
+  </alert>
+</div>
+<div class="row">
+  <div class="col-lg-6" *ngIf="identite == 'phy' ">
+    <section class="panel">
+      <div style="margin-left:30px;">
+        <form class="form-horizontal">
+          <div class="form-group">
+            <div class="col-sm-3 pull-left">
+              <label class="control-label">Nom* </label></div>
+            <div class="col-sm-6">
+              <input type="text" id="nom" name="nom" class="form-control" [(ngModel)]="newPersonePhyz.Nom"
+                [ngModelOptions]="{standalone: true}" required #nom="ngModel">
+              <div *ngIf="nom.errors && (nom.dirty || nom.touched)" class="alert alert-danger">
+                <div [hidden]="!nom.errors.required">
+                  Nom obligatoire!
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-3 pull-left">
+              <label class="control-label">Prénom*</label></div>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" name="prenom" id="prenom" [(ngModel)]="newPersonePhyz.Prenom"
+                [ngModelOptions]="{standalone: true}" required #prenom="ngModel">
+              <div *ngIf="prenom.errors && (prenom.dirty || prenom.touched)" class="alert alert-danger">
+                <div [hidden]="!prenom.errors.required">
+                  Prénom obligatoire!
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-3 pull-left">
+              <label class="control-label">Date de naissance*</label></div>
+            <div class="col-sm-6">
+              <input type="date" id="DateNaissance" nom="DateNaissance" class="form-control"
+                [(ngModel)]="newPersonePhyz.DateNaissance" [ngModelOptions]="{standalone: true}" required
+                #DateNaissance="ngModel">
+              <div *ngIf="DateNaissance.errors && (DateNaissance.dirty || DateNaissance.touched)" class="alert alert-danger">
+                <div [hidden]="!DateNaissance.errors.required">
+                  Date de naissance obligatoire!
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-3 pull-left">
+              <label class="control-label">Profession *</label>
+            </div>
+            <div class="col-sm-6">
+              <input class="form-control" name="Profession" id="Profession" [(ngModel)]="newPersonePhyz.Profession"
+                [ngModelOptions]="{standalone: true}" required #sexe="ngModel" />
+
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-sm-3 pull-left">
+              <label class="control-label">Etat Civil*</label>
+            </div>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" [(ngModel)]="newPersonePhyz.EtatCivil"
+                [ngModelOptions]="{standalone: true}" name="EtatCivil" id="EtatCivil" required #EtatCivil="ngModel">
+
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-sm-3 pull-left">
+              <label class="control-label">Enfant Handicape Encharge </label></div>
+            <div class="col-sm-6">
+              <input type="text" id="NbrEnfHandicapeEncharge" name="NbrEnfHandicapeEncharge" class="form-control"
+                [(ngModel)]="newPersonePhyz.NbrEnfHandicapeEncharge" [ngModelOptions]="{standalone: true}" 
+                #NbrEnfHandicapeEncharge="ngModel">
+
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-sm-3 pull-left">
+              <label class="control-label">Autre Enfant *</label></div>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" name="NbreAutreEnf" id="NbreAutreEnf"
+                [(ngModel)]="newPersonePhyz.NbreAutreEnf" [ngModelOptions]="{standalone: true}" required
+                #NbreAutreEnf="ngModel">
+
+            </div>
+          </div>
+
+
+        </form>
+      </div>
+    </section>
+  </div>
+  <div class="col-lg-6" *ngIf="identite == 'phy'">
+      <section class="panel">
+        <div style="margin-right:30px;">
+          <form class="form-horizontal">
+  
+            <div class="form-group">
+              <div class="col-sm-3 pull-left">
+                <label class="control-label">Login*</label>
+              </div>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" [(ngModel)]="newPersonePhyz.login"
+                  [ngModelOptions]="{standalone: true}" id="login" name="login" required #login="ngModel">
+                <div *ngIf="login.errors && (login.dirty || login.touched)" class="alert alert-danger">
+                  <div [hidden]="!login.errors.required">
+                    Login obligatoire!
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+            <div class="form-group">
+              <div class="col-sm-3 pull-left">
+                <label class="control-label">Nouveau mot de passe*</label>
+              </div>
+              <div class="col-sm-6">
+                <input type="password" class="form-control" [(ngModel)]="newPersonePhyz.password"
+                  [ngModelOptions]="{standalone: true}" minlength="8" name="npwd" id="npwd" required #npwd="ngModel">
+                <div *ngIf="npwd.errors && (npwd.dirty || npwd.touched)" class="alert alert-danger">
+                  <div [hidden]="!npwd.errors.required">
+                    Mot de passe obligatoire!
+                  </div>
+                  <div [hidden]="!npwd.errors.minlength">
+                    Mot de passe trés courte!!
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+            <div class="form-group">
+              <div class="col-sm-3 pull-left">
+                <label class="control-label">Email*</label>
+              </div>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" [(ngModel)]="newPersonePhyz.email"
+                  [ngModelOptions]="{standalone: true}" name="email" id="email" required #email="ngModel"
+                  pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
+                <div *ngIf="email.errors && (email.dirty || email.touched)" class="alert alert-danger">
+                  <div [hidden]="!email.errors.required">
+                    Email obligatoire!
+                  </div>
+                  <div [hidden]="!email.errors.pattern">
+                    Email invalide!!
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+  
+  
+            <div class="form-group">
+              <div class="col-sm-3 pull-left">
+                <label class="control-label">Numéro de telephone*</label>
+              </div>
+              <div class="col-sm-6">
+                <input type="tel" class="form-control" [(ngModel)]="newPersonePhyz.tel"
+                  [ngModelOptions]="{standalone: true}" minlength="8" maxlength="8" id="tel" name="tel" required
+                  #tel="ngModel">
+                <div *ngIf="tel.errors && (tel.dirty || tel.touched)" class="alert alert-danger">
+                  <div [hidden]="!tel.errors.required">
+                    Numéro de telephone obligatoire!
+                  </div>
+                  <div [hidden]="!tel.errors.minlength">
+                    Numéro de telephone doit comporter 8 chiffre!!
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+            <div class="form-group">
+              <div class="col-sm-3 pull-left">
+                <label class="control-label">Adresse*</label>
+              </div>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" [(ngModel)]="newPersonePhyz.adresse"
+                  [ngModelOptions]="{standalone: true}" name="adresse" id="adresse" required #adresse="ngModel">
+  
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-3 pull-left">
+                <label class="control-label">Numero Cnss *</label>
+              </div>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" [(ngModel)]="newPersonePhyz.numCnss"
+                  [ngModelOptions]="{standalone: true}" name="numCnss" id="numCnss" required #numCnss="ngModel">
+  
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-3 pull-left">
+                <label class="control-label">Nationnalite *</label>
+              </div>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" [(ngModel)]="newPersonePhyz.nationnalite"
+                  [ngModelOptions]="{standalone: true}" name="nationnalite" id="nationnalite" required
+                  #nationnalite="ngModel">
+                <div *ngIf="nationnalite.errors && (nationnalite.dirty || nationnalite.touched)"
+                  class="alert alert-danger">
+                  <div [hidden]="!nationnalite.errors.required">
+                    Adresse obligatoire!
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="pull-right">
+                <div class="form-group">
+                  <div class="col-sm-6">
+                    <div class="pull-right">
+                      <button type="submit" class="btn btn-success pull-right" style="margin-right: 10px;" (click)="inscription()"
+                        >Inscription</button>
+                      <!-- <button type="button" class="btn btn-danger" (click)="cancelUpdate()">Annuler</button> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </form>
+        </div>
+      </section>
+  </div>
+  <div class="col-lg-6" *ngIf="identite == 'mor'">
+      <section class="panel">
+        <div style="margin-left:30px;">
+          <form class="form-horizontal">
+            <div class="form-group">
+              <div class="col-sm-3 pull-left">
+                <label class="control-label">Raison Social * </label></div>
+              <div class="col-sm-6">
+                <input type="text" id="RaisonSocial" name="RaisonSocial" class="form-control" [(ngModel)]="newPersoneMor.RaisonSocial"
+                  [ngModelOptions]="{standalone: true}" required #RaisonSocial="ngModel">
+                <div *ngIf="RaisonSocial.errors && (RaisonSocial.dirty || RaisonSocial.touched)" class="alert alert-danger">
+                  <div [hidden]="!RaisonSocial.errors.required">
+                      Raison Social obligatoire!
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-3 pull-left">
+                <label class="control-label">Chiffre D'affaire*</label></div>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" name="ChiffreDaffaire" id="ChiffreDaffaire" [(ngModel)]="newPersoneMor.ChiffreDaffaire"
+                  [ngModelOptions]="{standalone: true}" required #prenom="ngModel">
+
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-3 pull-left">
+                <label class="control-label">Regime Impot *</label>
+              </div>
+              <div class="col-sm-6">
+                <input class="form-control" name="regime_impot" id="regime_impot" [(ngModel)]="newPersoneMor.regime_impot"
+                  [ngModelOptions]="{standalone: true}" required #regime_impot="ngModel" />
+  
+              </div>
+            </div>
+  
+            <div class="form-group">
+              <div class="col-sm-3 pull-left">
+                <label class="control-label">code TVA *</label>
+              </div>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" [(ngModel)]="newPersoneMor.code_tva"
+                  [ngModelOptions]="{standalone: true}" name="code_tva" id="code_tva" required #code_tva="ngModel">
+  
+              </div>
+            </div>
+  
+            <div class="form-group">
+              <div class="col-sm-3 pull-left">
+                <label class="control-label">Assujettissement TVA * </label></div>
+              <div class="col-sm-6">
+                <input type="text" id="assujettissement_tva" name="assujettissement_tva" class="form-control"
+                  [(ngModel)]="newPersoneMor.assujettissement_tva" [ngModelOptions]="{standalone: true}" 
+                  #assujettissement_tva="ngModel">
+  
+              </div>
+            </div>
+  
+            <div class="form-group">
+              <div class="col-sm-3 pull-left">
+                <label class="control-label">Assujettissement Impots *</label></div>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" name="assujettissement_impots" id="assujettissement_impots"
+                  [(ngModel)]="newPersoneMor.assujettissement_impots" [ngModelOptions]="{standalone: true}" required
+                  #assujettissement_impots="ngModel">
+  
+              </div>
+            </div>
+  
+            <div class="form-group">
+              <div class="col-sm-3 pull-left">
+                <label class="control-label">Generator TVA *</label></div>
+              <div class="col-sm-6">
+                <input type="date" id="generator_tva" nom="generator_tva" class="form-control"
+                  [(ngModel)]="newPersoneMor.generator_tva" [ngModelOptions]="{standalone: true}" required
+                  #generator_tva="ngModel">
+
+              </div>
+            </div>
+  
+            <div class="form-group">
+              <div class="col-sm-3 pull-left">
+                <label class="control-label">Periodicite Impots *</label>
+              </div>
+              <div class="col-sm-6">
+                <input class="form-control" name="periodicite_impots" id="periodicite_impots" [(ngModel)]="newPersoneMor.periodicite_impots"
+                  [ngModelOptions]="{standalone: true}" required #periodicite_impots="ngModel" />
+
+              </div>
+            </div>
+  
+  
+          </form>
+        </div>
+      </section>
+  </div>
+  <div class="col-lg-6" *ngIf="identite == 'mor'">
+    <section class="panel">
+      <div style="margin-right:30px;">
+        <form class="form-horizontal">
+
+          <div class="form-group">
+            <div class="col-sm-3 pull-left">
+              <label class="control-label">Login*</label>
+            </div>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" [(ngModel)]="newPersoneMor.login"
+                [ngModelOptions]="{standalone: true}" id="login" name="login" required #login="ngModel">
+              <div *ngIf="login.errors && (login.dirty || login.touched)" class="alert alert-danger">
+                <div [hidden]="!login.errors.required">
+                  Login obligatoire!
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-sm-3 pull-left">
+              <label class="control-label">Nouveau mot de passe*</label>
+            </div>
+            <div class="col-sm-6">
+              <input type="password" class="form-control" [(ngModel)]="newPersoneMor.password"
+                [ngModelOptions]="{standalone: true}" minlength="8" name="npwd" id="npwd" required #npwd="ngModel">
+              <div *ngIf="npwd.errors && (npwd.dirty || npwd.touched)" class="alert alert-danger">
+                <div [hidden]="!npwd.errors.required">
+                  Mot de passe obligatoire!
+                </div>
+                <div [hidden]="!npwd.errors.minlength">
+                  Mot de passe trés courte!!
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-sm-3 pull-left">
+              <label class="control-label">Email*</label>
+            </div>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" [(ngModel)]="newPersoneMor.email"
+                [ngModelOptions]="{standalone: true}" name="email" id="email" required #email="ngModel"
+                pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
+              <div *ngIf="email.errors && (email.dirty || email.touched)" class="alert alert-danger">
+                <div [hidden]="!email.errors.required">
+                  Email obligatoire!
+                </div>
+                <div [hidden]="!email.errors.pattern">
+                  Email invalide!!
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+          <div class="form-group">
+            <div class="col-sm-3 pull-left">
+              <label class="control-label">Numéro de telephone*</label>
+            </div>
+            <div class="col-sm-6">
+              <input type="tel" class="form-control" [(ngModel)]="newPersoneMor.tel"
+                [ngModelOptions]="{standalone: true}" minlength="8" maxlength="8" id="tel" name="tel" required
+                #tel="ngModel">
+              <div *ngIf="tel.errors && (tel.dirty || tel.touched)" class="alert alert-danger">
+                <div [hidden]="!tel.errors.required">
+                  Numéro de telephone obligatoire!
+                </div>
+                <div [hidden]="!tel.errors.minlength">
+                  Numéro de telephone doit comporter 8 chiffre!!
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-sm-3 pull-left">
+              <label class="control-label">Adresse*</label>
+            </div>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" [(ngModel)]="newPersoneMor.adresse"
+                [ngModelOptions]="{standalone: true}" name="adresse" id="adresse" required #adresse="ngModel">
+
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-3 pull-left">
+              <label class="control-label">Numero Cnss *</label>
+            </div>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" [(ngModel)]="newPersoneMor.numCnss"
+                [ngModelOptions]="{standalone: true}" name="numCnss" id="numCnss" required #numCnss="ngModel">
+
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-3 pull-left">
+              <label class="control-label">Nationnalite *</label>
+            </div>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" [(ngModel)]="newPersoneMor.nationnalite"
+                [ngModelOptions]="{standalone: true}" name="nationnalite" id="nationnalite" required
+                #nationnalite="ngModel">
+              <div *ngIf="nationnalite.errors && (nationnalite.dirty || nationnalite.touched)"
+                class="alert alert-danger">
+                <div [hidden]="!nationnalite.errors.required">
+                  Adresse obligatoire!
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pull-right">
+              <div class="form-group">
+                <div class="col-sm-6">
+                  <div class="pull-right">
+                    <button type="submit" class="btn btn-success pull-right" style="margin-right: 10px;" (click)="inscription()"
+                    >Inscription</button>
+                    <!-- <button type="button" class="btn btn-danger" (click)="cancelUpdate()">Annuler</button> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+        </form>
+      </div>
+    </section>
+  </div>
+
+
+</div>

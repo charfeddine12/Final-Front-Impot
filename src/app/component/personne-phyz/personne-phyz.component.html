@@ -1,0 +1,345 @@
+<script>window.__theme = 'bs4';</script>
+
+<div class="row">
+    <div class="col-lg-12">
+        <section class="panel">
+            <header class="panel-heading">
+                <h3>Liste des personnes physiques</h3>
+                <div style="float: right; margin-bottom: 10px;">
+                    <button class="btn btn-info" (click)="showFilter()">Filtrer<i class="fa fa-filter"
+                            aria-hidden="true"></i></button>
+                </div>
+            </header>
+            <div style="margin-top: 30px; margin-right: 2">
+                <alert type="danger" dismissible="true" *ngIf="addingError">
+                    <strong>Erreur!</strong> Une erreur s'est produite lors d'ajout d'une personne.
+                </alert>
+                <alert type="success" dismissible="true" *ngIf="employeAdded">
+                    <strong>Succées !</strong> L'ajout est effectué avec succés.
+                </alert>
+                <alert type="danger" dismissible="true" *ngIf="updatingError">
+                    <strong>Erreur!</strong> Une erreur s'est produite lors de mise à jour d'personne.
+                </alert>
+                <alert type="success" dismissible="true" *ngIf="employeUpdated">
+                    <strong>Succées !</strong> La mise à jour est effectué avec succés.
+                </alert>
+                <alert type="danger" dismissible="true" *ngIf="deleteError">
+                    <strong>Erreur!</strong> Une erreur s'est produite lors de la suppression d'personne.
+                </alert>
+                <alert type="success" dismissible="true" *ngIf="deleted">
+                    <strong>Succées !</strong> La suppression est effectué avec succés.
+                </alert>
+            </div>
+            <table class="table table-striped table-advance table-hover" *ngIf="!(noData && dataLoaded)">
+                <thead>
+                    <tr>
+                        <th>
+                            <ng-container *ngIf="!filter">Status</ng-container>
+                            <ng-container *ngIf="filter"><input type="checkbox" class="form-control" placeholder="Status"
+                                    [(ngModel)]="Status" [value]="Status">
+                            </ng-container>
+                        </th>
+                        <th>
+                            <ng-container *ngIf="!filter">Nom</ng-container>
+                            <ng-container *ngIf="filter"><input type="text" class="form-control" placeholder="Nom"
+                                    [(ngModel)]="nom_field" [value]="nom_field">
+                            </ng-container>
+                        </th>
+                        <th>
+                            <ng-container *ngIf="!filter">Prenom</ng-container>
+                            <ng-container *ngIf="filter"><input type="text" class="form-control" placeholder="Prénom"
+                                    [(ngModel)]="prenom_field" [value]="prenom_field">
+                            </ng-container>
+                        </th>
+                        <th>
+                            <ng-container *ngIf="!filter">DateNaissance</ng-container>
+                            <ng-container *ngIf="filter"><input type="text" class="form-control"
+                                    [(ngModel)]="date_naiss_field" [value]="date_naiss_field"
+                                    placeholder="Date de naissance"></ng-container>
+                        </th>
+                        <th>
+                            <ng-container *ngIf="!filter">Email</ng-container>
+                            <ng-container *ngIf="filter"><input type="text" class="form-control" placeholder="Email"
+                                    [(ngModel)]="email_field" [value]="email_field">
+                            </ng-container>
+                        </th>
+                        <th>
+                            <ng-container *ngIf="!filter">Adresse</ng-container>
+                            <ng-container *ngIf="filter"><input type="text" name="adress_field" class="form-control"
+                                    placeholder="Adresse" [(ngModel)]="adress_field" [value]="adress_field">
+                            </ng-container>
+                        </th>
+                        <th>
+                            <ng-container *ngIf="!filter">numCnss</ng-container>
+                            <ng-container *ngIf="filter"><input type="text" class="form-control" [(ngModel)]="num_cnss_field"
+                                    [value]="num_cnss_field" placeholder="numCnss"></ng-container>
+                        </th>
+                        <th>
+                            <ng-container *ngIf="!filter">login</ng-container>
+                            <ng-container *ngIf="filter"><input type="text" class="form-control" placeholder="Login"
+                                    [(ngModel)]="login_field" [value]="login_field">
+                            </ng-container>
+                        </th>
+                        <th>
+                            <ng-container *ngIf="!filter">Profession</ng-container>
+                            <ng-container *ngIf="filter"><input type="text" class="form-control" placeholder="Profession"
+                                    [(ngModel)]="profession_field" [value]="profession_field">
+                            </ng-container>
+                        </th>
+                        <th style="min-width: 5%;">Action</th>
+                    </tr>
+                </thead>
+                <tbody *ngFor="let newPersonnePhyz of personePhyzs; let i = index;">
+                    <tr>
+                        <td *ngIf="newPersonnePhyz.status == false">
+                            <span class="label label-danger">Desactiver</span>
+
+                        </td>
+                        <td *ngIf="newPersonnePhyz.status == true">
+                            <span class="label label-success">Activee</span>
+
+                        </td>
+                        <td>{{newPersonnePhyz.nom}}</td>
+                        <td>{{newPersonnePhyz.prenom}}</td>
+                        <td>{{newPersonnePhyz.dateNaissance}}</td>
+                        <td style="max-width: 10%">{{newPersonnePhyz.email}}</td>
+                        <td>{{newPersonnePhyz.adresse}}</td>
+                        <td>{{newPersonnePhyz.numCnss}}</td>
+                        <td>{{newPersonnePhyz.login}}</td>
+                        <td>{{newPersonnePhyz.profession}}</td>
+                        <td>
+                            <div class="btn-group">
+                                <button class="btn btn-info" tooltip="Details"
+                                    (click)="openDetailsModal(details, newPersonnePhyz)"><i
+                                        class="icon_info_alt"></i></button>
+                                <button tooltip="Modifier" (click)="openUpdateModal(updatetemplate, newPersonnePhyz)"
+                                    class="btn btn-success"><i class="icon_pencil-edit_alt"></i></button>
+                                <button class="btn btn-danger" tooltip="Supprimer"
+                                    (click)="openDeleteModal(confirmDelete, newPersonnePhyz)"><i
+                                        class="icon_close_alt2"></i></button>
+                            </div>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+            <alert type="info" *ngIf="noData && dataLoaded">
+                <strong>Il n'y a aucun personne physiques à afficher!</strong>
+            </alert>
+        </section>
+    </div>
+</div>
+
+
+
+<ng-template #updatetemplate>
+    <form class="form-horizontal">
+        <div class="modal-header">
+            <h3 class="modal-title pull-left">Modification de la personne physique </h3>
+            <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <div class="col-sm-4 pull-left">
+                    <label class="control-label">Nom*</label>
+                </div>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" [(ngModel)]="personePhyzsToupdate.nom"
+                        [ngModelOptions]="{standalone: true}" id="nom" name="nom" required #nom="ngModel">
+                    <div *ngIf="nom.errors && (nom.dirty || nom.touched)" class="alert alert-danger">
+                        <div [hidden]="!nom.errors.required">
+                            Champ obligatoire!
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-4 pull-left">
+                    <label class="control-label">Prénom*</label></div>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" [(ngModel)]="personePhyzsToupdate.prenom"
+                        [ngModelOptions]="{standalone: true}" name="prenom" id="prenom" required #prenom="ngModel">
+                    <div *ngIf="prenom.errors && (prenom.dirty || prenom.touched)" class="alert alert-danger">
+                        <div [hidden]="!prenom.errors.required">
+                            Champ obligatoire!
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-4 pull-left">
+                    <label class="control-label">DateNaissance*</label></div>
+                <div class="col-sm-8">
+                    <input type="number" class="form-control" [(ngModel)]="personePhyzsToupdate.date_naiss"
+                        [ngModelOptions]="{standalone: true}" id="date_naiss" nom="DateNaissance" required
+                        #dateNaissance="ngModel">
+                    <div *ngIf="date_naiss.errors && (date_naiss.dirty || date_naiss.touched)"
+                        class="alert alert-danger">
+                        <div [hidden]="!date_naiss.errors.required">
+                            Champ obligatoire!
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-4 pull-left">
+                    <label class="control-label">Email*</label></div>
+                <div class="col-sm-8">
+                    <input type="email" class="form-control" [(ngModel)]="personePhyzsToupdate.email"
+                        [ngModelOptions]="{standalone: true}" name="email" id="email" required #email="ngModel"
+                        pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
+                    <div *ngIf="email.errors && (email.dirty || email.touched)" class="alert alert-danger">
+                        <div [hidden]="!email.errors.required">
+                            Champ obligatoire!
+                        </div>
+                        <div [hidden]="!email.errors.pattern">
+                            Email invalide!!
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-4 pull-left">
+                    <label class="control-label">Adresse*</label>
+                </div>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" [(ngModel)]="personePhyzsToupdate.adresse"
+                        [ngModelOptions]="{standalone: true}" name="adresse" id="adresse" required #adresse="ngModel">
+                    <div *ngIf="adresse.errors && (adresse.dirty || adresse.touched)" class="alert alert-danger">
+                        <div [hidden]="!adresse.errors.required">
+                            Champ obligatoire!
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-4 pull-left">
+                    <label class="control-label">NumCnss*</label>
+                </div>
+                <div class="col-sm-8">
+                    <input type="tel" class="form-control" [(ngModel)]="personePhyzsToupdate.numCnss"
+                        [ngModelOptions]="{standalone: true}" minlength="8" maxlength="8" id="numCnss" name="numCnss" required
+                        #numCnss="ngModel">
+                    <div *ngIf="numCnss.errors && (numCnss.dirty || numCnss.touched)" class="alert alert-danger">
+                        <div [hidden]="!numCnss.errors.required">
+                            Champ obligatoire!
+                        </div>
+                        <div [hidden]="!numCnss.errors.minlength">
+                            Numéro Cnss invalide!!
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-4 pull-left">
+                    <label class="control-label">Login*</label></div>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" [(ngModel)]="personnePhyzsToupdate.login"
+                        [ngModelOptions]="{standalone: true}" id="login" name="login" required #login="ngModel">
+                    <div *ngIf="login.errors && (login.dirty || login.touched)" class="alert alert-danger">
+                        <div [hidden]="!login.errors.required">
+                            Champ obligatoire!
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                    <div class="col-sm-4 pull-left">
+                        <label class="control-label">Proffession*</label></div>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" [(ngModel)]="personePhyzsToupdate.profession"
+                            [ngModelOptions]="{standalone: true}" id="profession" name="profession" required #profession="ngModel">
+                        <div *ngIf="profession.errors && (profession.dirty || profession.touched)" class="alert alert-danger">
+                            <div [hidden]="!profession.errors.required">
+                                Champ obligatoire!
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-success pull-left" (click)="updateEmployee();">Modifier</button>
+            <button type="button" class="btn btn-danger" (click)="modalRef.hide()">Annuler</button>
+
+        </div>
+    </form>
+</ng-template>
+ <!--
+activite: "imen"
+adresse: "Tunisie, tunis cité el khadra"
+assujettissement_impots: "imen"
+assujettissement_tva: "imen"
+authorities: null
+chiffreDaffaire: 0
+code_tva: "imen"
+credentialsNonExpired: false
+dateDebutActivite: "2019-06-19T00:00:00.000+0000"
+declarationImpots: []
+email: "imen@gmail.com"
+employees: []
+enabled: false
+generator_tva: "imen"
+impotsSocietes: []
+login: "imen"
+nationnalite: "imen"
+nif: 1
+numCnss: 24563536
+password: "imen"
+periodicite_acitivte: "imen"
+periodicite_impots: "imen"
+raisonSocial: "imen"
+regime_impot: "v"
+secteurActivite: "imen"
+status: "imen"
+tel: 0
+username: null-->
+<ng-template #details>
+    <div class="modal-header">
+        <h3 class="modal-title pull-left">Detail:{{selectedEmployee.login}}</h3>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <!-- <div style="display: inline-block; width:50%;"> -->
+
+        <!-- </div> -->
+        <div style="margin-left:20px; font-size: 14;">
+            <table>
+                <tr>
+
+                    <td>
+                        <strong>Nom:</strong> {{selectedEmployee.nom}}<br>
+                        <strong>Prenom:</strong> {{selectedEmployee.prenom}}<br>
+                        <strong>DateNaissance:</strong> {{selectedEmployee.dateNaissance | date: 'dd-MM-yyyy'}}<br>
+                        <strong>Profession:</strong> {{selectedEmployee.profession}}<br>
+                        <strong>EtatCivil:</strong> {{selectedEmployee.etatCivil}}<br>
+                        <strong>NbreEnfHandicapeEncharge:</strong> {{selectedEmployee.nbreEnfHandicapeEncharge}}<br>
+                        <strong>NbreAutreEnf:</strong> {{selectedEmployee.NbreAutreEnf}}<br>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div style=" left: 80%;position: relative;">
+            <button tooltip="Accepter" (click)="ConifrmerInscriPhyz(selectedEmployee.nif)"
+            class="btn btn-success"><i class="icon_pencil-edit_alt"></i></button>
+        <button class="btn btn-danger" tooltip="Annuler" style="margin-left: 1%;"
+            (click)="modalRef.hide()"><i
+                class="icon_close_alt2"></i></button>
+        </div>
+
+
+    </div>
+</ng-template>
+
+<ng-template #confirmDelete>
+    <div class="modal-body text-center">
+        <p>Êtes-vous sûr de vouloir supprimer cet contribuable?</p>
+        <button type="button" style="margin-right: 7px;" class="btn btn-default" (click)="confirm()">Oui</button>
+        <button type="button" class="btn btn-primary" (click)="modalRef.hide()">Non</button>
+    </div>
+</ng-template>
